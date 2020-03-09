@@ -67,4 +67,3 @@ export default class App extends React.Component {
 }
 
 const styles = StyleSheet.create({});
-//Gestion de stock et suivi de distribution des produits pharmaceutiques
