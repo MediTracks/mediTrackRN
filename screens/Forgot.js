@@ -10,7 +10,7 @@ import {
 import { Button, Block, Input, Text } from "../components";
 import { theme } from "../constants";
 
-const VALID_EMAIL = "contact@react-ui-kit.com";
+const VALID_EMAIL = "user@cordaid.com";
 
 export default class Forgot extends Component {
   state = {
@@ -36,8 +36,8 @@ export default class Forgot extends Component {
 
     if (!errors.length) {
       Alert.alert(
-        "Password sent!",
-        "Please check you email.",
+        "Mots de passe reinitialise!",
+        "Veillez verifier dans votre boite mail.",
         [
           {
             text: "OK",
@@ -50,9 +50,9 @@ export default class Forgot extends Component {
       );
     } else {
       Alert.alert(
-        "Error",
-        "Please check you Email address.",
-        [{ text: "Try again" }],
+        "Erreure",
+        "Veillez verifier votre boite mail.",
+        [{ text: "Reesayer" }],
         { cancelable: false }
       );
     }
@@ -67,7 +67,7 @@ export default class Forgot extends Component {
       <KeyboardAvoidingView style={styles.forgot} behavior="padding">
         <Block padding={[0, theme.sizes.base * 2]}>
           <Text h1 bold>
-            Forgot
+            Reinitialiser le mots de passe
           </Text>
           <Block middle>
             <Input
@@ -82,7 +82,7 @@ export default class Forgot extends Component {
                 <ActivityIndicator size="small" color="white" />
               ) : (
                 <Text bold white center>
-                  Forgot
+                  Reinitialiser
                 </Text>
               )}
             </Button>
@@ -94,7 +94,7 @@ export default class Forgot extends Component {
                 center
                 style={{ textDecorationLine: "underline" }}
               >
-                Back to Login
+                Retour a la connexion
               </Text>
             </Button>
           </Block>

@@ -9,8 +9,8 @@ import {
 import { Button, Block, Input, Text } from "../components";
 import { theme } from "../constants";
 
-const VALID_EMAIL = "contact@react-ui-kit.com";
-const VALID_PASSWORD = "subscribe";
+const VALID_EMAIL = "user@cordaid.com";
+const VALID_PASSWORD = "drugs";
 
 export default class Login extends Component {
   state = {
@@ -52,7 +52,7 @@ export default class Login extends Component {
       <KeyboardAvoidingView style={styles.login} behavior="padding">
         <Block padding={[0, theme.sizes.base * 2]}>
           <Text h1 bold>
-            Login
+            Se connecter
           </Text>
           <Block middle>
             <Input
@@ -64,7 +64,7 @@ export default class Login extends Component {
             />
             <Input
               secure
-              label="Password"
+              label="Mots de passe"
               error={hasErrors("password")}
               style={[styles.input, hasErrors("password")]}
               defaultValue={this.state.password}
@@ -75,7 +75,7 @@ export default class Login extends Component {
                 <ActivityIndicator size="small" color="white" />
               ) : (
                 <Text bold white center>
-                  Login
+                  Se connecter
                 </Text>
               )}
             </Button>
@@ -87,7 +87,7 @@ export default class Login extends Component {
                 center
                 style={{ textDecorationLine: "underline" }}
               >
-                Forgot your password?
+                Mots de passe oublie?
               </Text>
             </Button>
           </Block>
