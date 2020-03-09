@@ -1,52 +1,80 @@
 const categories = [
   {
-    id: "plants",
-    name: "Plants",
-    tags: ["products", "inspirations"],
+    id: "1",
+    name: "Paracetamol 200 mg sp",
+    tags: ["medicaments", "en attente"],
     count: 147,
     image: require("../assets/icons/plants.png")
   },
   {
-    id: "seeds",
-    name: "Seeds",
-    tags: ["products", "shop"],
+    id: "2",
+    name: "Cefalexine sp, 125mg/5ml, 100ml",
+    tags: ["medicaments", "deja servi"],
     count: 16,
     image: require("../assets/icons/seeds.png")
   },
   {
-    id: "flowers",
-    name: "Flowers",
-    tags: ["products", "inspirations"],
+    id: "3",
+    name: "Spéctinomycine 2g",
+    tags: ["medicaments", "en attente"],
     count: 68,
     image: require("../assets/icons/flowers.png")
   },
   {
-    id: "sprayers",
-    name: "Sprayers",
-    tags: ["products", "shop"],
+    id: "4",
+    name:"Amoxicilline SP 125mg/5ml, 100ml",
+    tags: ["medicaments", "deja servi"],
     count: 17,
     image: require("../assets/icons/sprayers.png")
   },
   {
-    id: "pots",
-    name: "Pots",
-    tags: ["products", "shop"],
+    id: "5",
+    name: "Ampicilline  1g, fl",
+    tags: ["medicaments", "deja servi"],
     count: 47,
     image: require("../assets/icons/pots.png")
   },
   {
-    id: "fertilizers",
-    name: "fertilizers",
-    tags: ["products", "shop"],
+    id: "6",
+    name: "Fucidate sodique 250mg",
+    tags: ["medicaments", "deja servi"],
+    count: 47,
+    image: require("../assets/icons/fertilizers.png")
+  },
+  {
+    id: "7",
+    name: "Oxacilline 250mg/5ml",
+    tags: ["medicaments", "en attente"],
+    count: 47,
+    image: require("../assets/icons/pots.png")
+  },
+  {
+    id: "8",
+    name: "Cefixime 100mg/5ml",
+    tags: ["medicaments", "deja servi"],
+    count: 47,
+    image: require("../assets/icons/fertilizers.png")
+  },
+  {
+    id: "9",
+    name: "Pénicilline benzathine  2,4 MUI, fl",
+    tags: ["medicaments", "en attente"],
+    count: 47,
+    image: require("../assets/icons/flowers.png")
+  },
+  {
+    id: "10",
+    name: "PénicillineV,  phénoxyméthyle pénicilline 125mg/5ml, 100ml",
+    tags: ["medicaments", "deja servi"],
     count: 47,
     image: require("../assets/icons/fertilizers.png")
   }
 ];
 
-const products = [
+const medicaments = [
   {
     id: 1,
-    name: "16 Best Plants That Thrive In Your Bedroom",
+    name: "PénicillineV,  phénoxyméthyle pénicilline 125mg/5ml, 100ml",
     description:
       "Bedrooms deserve to be decorated with lush greenery just like every other room in the house – but it can be tricky to find a plant that thrives here. Low light, high humidity and warm temperatures mean only certain houseplants will flourish.",
     tags: ["Interior", "27 m²", "Ideas"],
@@ -86,4 +114,4 @@ const profile = {
   newsletter: false
 };
 
-export { categories, explore, products, profile };
+export { categories, explore, medicaments, profile };

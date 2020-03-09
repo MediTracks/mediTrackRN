@@ -4,17 +4,21 @@ import {
   Image,
   StyleSheet,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  View
 } from "react-native";
 
 import { Card, Badge, Button, Block, Text } from "../components";
 import { theme, mocks } from "../constants";
 
+import ActionButton from 'react-native-circular-action-menu';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 const { width } = Dimensions.get("window");
 
 class Browse extends Component {
   state = {
-    active: "Products",
+    active: "Medicaments",
     categories: []
   };
 
@@ -51,13 +55,13 @@ class Browse extends Component {
   render() {
     const { profile, navigation } = this.props;
     const { categories } = this.state;
-    const tabs = ["Products", "Inspirations", "Shop"];
+    const tabs = ["Medicaments", "En attente", "Deja servi"];
 
     return (
       <Block>
         <Block flex={false} row center space="between" style={styles.header}>
-          <Text h1 bold>
-            Browse
+          <Text h2 bold>
+            Zone de sante de SAKE
           </Text>
           <Button onPress={() => navigation.navigate("Settings")}>
             <Image source={profile.avatar} style={styles.avatar} />
@@ -97,6 +101,18 @@ class Browse extends Component {
             ))}
           </Block>
         </ScrollView>
+        <ActionButton buttonColor="rgba(231,76,60,1)">
+          <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>
+            <Icon name="ios-cloud" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='#3498db' title="Notifications" onPress={() => {}}>
+            <Icon name="ios-remove" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='#1abc9c' title="All Tasks" onPress={() => {}}>
+            <Icon name="ios-person-add" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+        </ActionButton>
+        
       </Block>
     );
   }
@@ -129,7 +145,8 @@ const styles = StyleSheet.create({
   },
   active: {
     borderBottomColor: theme.colors.secondary,
-    borderBottomWidth: 3
+    borderBottomWidth: 3,
+    textAlign:"center"
   },
   categories: {
     flexWrap: "wrap",
@@ -141,5 +158,10 @@ const styles = StyleSheet.create({
     minWidth: (width - theme.sizes.padding * 2.4 - theme.sizes.base) / 2,
     maxWidth: (width - theme.sizes.padding * 2.4 - theme.sizes.base) / 2,
     maxHeight: (width - theme.sizes.padding * 2.4 - theme.sizes.base) / 2
+  },
+  actionButtonIcon: {
+    fontSize: 20,
+    height: 22,
+    color: 'white',
   }
 });
