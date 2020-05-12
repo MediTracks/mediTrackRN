@@ -13,15 +13,19 @@ import { theme } from "../constants";
 export default class SignUp extends Component {
   state = {
     email: null,
-    username: null,
+    name: null,
+    lastname:null,
+    surname:null,
     password: null,
+    phone:null,
+    
     errors: [],
     loading: false
   };
 
   handleSignUp() {
     const { navigation } = this.props;
-    const { email, username, password } = this.state;
+    const { email, name, password, lastname, surname, phone } = this.state;
     const errors = [];
 
     Keyboard.dismiss();
@@ -29,8 +33,11 @@ export default class SignUp extends Component {
 
     // check with backend API or with some static data
     if (!email) errors.push("email");
-    if (!username) errors.push("username");
+    if (!name) errors.push("name");
     if (!password) errors.push("password");
+    if (!lastname) errors.push("lastname");
+    if (!surname) errors.push("surname");
+    if (!phone) errors.push("phone");
 
     this.setState({ errors, loading: false });
 
@@ -59,11 +66,34 @@ export default class SignUp extends Component {
     return (
       <KeyboardAvoidingView style={styles.signup} behavior="padding">
         <Block padding={[0, theme.sizes.base * 2]}>
+         
+          <Block middle>
           <Text h1 bold>
             Sign Up
           </Text>
-          <Block middle>
+           
             <Input
+              label="name"
+              error={hasErrors("name")}
+              style={[styles.input, hasErrors("name")]}
+              defaultValue={this.state.name}
+              onChangeText={text => this.setState({ name: text })}
+            />
+            <Input
+              label="lastname"
+              error={hasErrors("lastname")}
+              style={[styles.input, hasErrors("lastname")]}
+              defaultValue={this.state.lastname}
+              onChangeText={text => this.setState({ lastname: text })}
+            />
+             <Input
+              label="phone"
+              error={hasErrors("phone")}
+              style={[styles.input, hasErrors("phone")]}
+              defaultValue={this.state.phone}
+              onChangeText={text => this.setState({ phone: text })}
+            />
+             <Input
               email
               label="Email"
               error={hasErrors("email")}
@@ -72,19 +102,20 @@ export default class SignUp extends Component {
               onChangeText={text => this.setState({ email: text })}
             />
             <Input
-              label="Username"
-              error={hasErrors("username")}
-              style={[styles.input, hasErrors("username")]}
-              defaultValue={this.state.username}
-              onChangeText={text => this.setState({ username: text })}
-            />
-            <Input
               secure
               label="Password"
               error={hasErrors("password")}
               style={[styles.input, hasErrors("password")]}
               defaultValue={this.state.password}
               onChangeText={text => this.setState({ password: text })}
+            />
+            <Input
+              secure
+              label="confirm_password"
+              error={hasErrors("confirm_password")}
+              style={[styles.input, hasErrors("confirm_password")]}
+              defaultValue={this.state.confirm_password}
+              onChangeText={text => this.setState({ confirm_password: text })}
             />
             <Button gradient onPress={() => this.handleSignUp()}>
               {loading ? (

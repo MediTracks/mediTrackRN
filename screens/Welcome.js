@@ -245,11 +245,11 @@ class Welcome extends Component {
               Se connecter
             </Text>
           </Button>
-          <Button shadow onPress={() => navigation.navigate("SignUp")}>
+          {/* <Button shadow onPress={() => navigation.navigate("SignUp")}>
             <Text center semibold>
               S'inscrire
             </Text>
-          </Button>
+          </Button> */}
           <Button onPress={() => this.setState({ showTerms: true })}>
             <Text center caption gray>
               Conditions d'utilisations
