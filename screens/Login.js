@@ -14,31 +14,33 @@ const VALID_PASSWORD = "drugs";
 
 export default class Login extends Component {
   state = {
-    email: VALID_EMAIL,
-    password: VALID_PASSWORD,
+    email: null,
+    phone: "",
+    password: "",
     errors: [],
     loading: false
   };
 
   handleLogin() {
     const { navigation } = this.props;
-    const { email, password } = this.state;
+    const { email, password, phone } = this.state;
     const errors = [];
 
     Keyboard.dismiss();
     this.setState({ loading: true });
 
-    // check with backend API or with some static data
-    if (email !== VALID_EMAIL) {
-      errors.push("email");
+    if (phone.trim().length <= 12) {
+      errors.push("phone");
     }
-    if (password !== VALID_PASSWORD) {
+    if (password.trim().length <= 5) {
       errors.push("password");
     }
-
+    console.log(errors)
     this.setState({ errors, loading: false });
 
     if (!errors.length) {
+      //Call the 
+      
       navigation.navigate("Browse");
     }
   }
@@ -56,11 +58,11 @@ export default class Login extends Component {
           </Text>
           <Block middle>
             <Input
-              label="Email"
-              error={hasErrors("email")}
-              style={[styles.input, hasErrors("email")]}
-              defaultValue={this.state.email}
-              onChangeText={text => this.setState({ email: text })}
+              label="Téléphone"
+              error={hasErrors("phone")}
+              style={[styles.input, hasErrors("phone")]}
+              defaultValue={this.state.phone}
+              onChangeText={text => this.setState({ phone: text })}
             />
             <Input
               secure
