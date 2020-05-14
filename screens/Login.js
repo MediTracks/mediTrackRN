@@ -3,22 +3,24 @@ import {
   ActivityIndicator,
   Keyboard,
   KeyboardAvoidingView,
-  StyleSheet
+  StyleSheet,
+  ToastAndroid,
+  AsyncStorage,
 } from "react-native";
 
 import { Button, Block, Input, Text } from "../components";
 import { theme } from "../constants";
 
-const VALID_EMAIL = "user@cordaid.com";
-const VALID_PASSWORD = "drugs";
-
 export default class Login extends Component {
+
   state = {
     email: null,
-    phone: "",
-    password: "",
+    id : 4,
+    phone: "+243828598304",
+    password: "123456",
     errors: [],
-    loading: false
+    loading: false,
+    isConnected: true
   };
 
   handleLogin() {
@@ -39,12 +41,39 @@ export default class Login extends Component {
     this.setState({ errors, loading: false });
 
     if (!errors.length) {
-      //Call the 
-      
-      navigation.navigate("Browse");
+      //Call the API
+      this._login();
     }
   }
+  
+  _login = async () =>{
+    const { navigation } = this.props;
+    const { password, phone } = this.state;
 
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = e => {
+      if (request.readyState !== 4) {
+        return;
+      }
+      if (request.status === 200) {
+        var req = JSON.parse(request.responseText)
+        //ToastAndroid.show(JSON.stringify(req), ToastAndroid.LONG)
+        //Save current user in localstorage
+        AsyncStorage.setItem('current_user', JSON.stringify(req))
+        .then(json => {
+          ToastAndroid.show('Current user save locally', ToastAndroid.SHORT)
+      }).catch(error => ToastAndroid.show('current_user error local memory', ToastAndroid.SHORT));
+        navigation.navigate("Browse");
+      } else {
+        ToastAndroid.show("Identifiants incorrects", ToastAndroid.LONG)
+        //console.warn('error');
+      }
+    };
+
+    request.open('GET', 'https://apimeditracks.azurewebsites.net/api/users/'+phone);
+    request.send();
+  }
+  
   render() {
     const { navigation } = this.props;
     const { loading, errors } = this.state;
