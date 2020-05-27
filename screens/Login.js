@@ -45,7 +45,45 @@ export default class Login extends Component {
       this._login();
     }
   }
-  
+
+  _login2 = async () =>{
+    const { navigation } = this.props;
+    const { password, phone } = this.state;
+
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = e => {
+      if (request.readyState !== 4) {
+        return;
+      }
+      if (request.status === 200) {
+        var req = JSON.parse(request.responseText)
+        // Iterrate trhought all the user to find one who matches the current users
+        clientsPhone = req.find((item2) => item2.phone == phone);
+        clientsPAssword = req.find((item2) => item2.password == password);
+        if(!clientsPhone){
+          ToastAndroid.show("Identifiants incorrects", ToastAndroid.LONG)
+        }
+        else{
+          //ToastAndroid.show(JSON.stringify(req), ToastAndroid.LONG)
+          //Save current user in localstorage
+          AsyncStorage.setItem('current_user', JSON.stringify(clientsPhone))
+          .then(json => {
+            ToastAndroid.show('Current user save locally', ToastAndroid.SHORT)
+          }).catch(error => ToastAndroid.show('current_user error local memory', ToastAndroid.SHORT));
+          navigation.navigate("Browse");
+        }
+      } else {
+        ToastAndroid.show("Identifiants incorrects", ToastAndroid.LONG)
+        navigation.navigate("Browse");
+
+        //console.warn('error');
+      }
+    };
+
+    request.open('GET', 'https://apimeditracks.azurewebsites.net/api/users/'+phone);
+    request.send();
+  }
+
   _login = async () =>{
     const { navigation } = this.props;
     const { password, phone } = this.state;
@@ -66,6 +104,8 @@ export default class Login extends Component {
         navigation.navigate("Browse");
       } else {
         ToastAndroid.show("Identifiants incorrects", ToastAndroid.LONG)
+        navigation.navigate("Browse");
+
         //console.warn('error');
       }
     };
