@@ -42,7 +42,7 @@ export default class Login extends Component {
 
     if (!errors.length) {
       //Call the API here
-      this._login();
+      this._login2();
     }
   }
 
@@ -57,11 +57,18 @@ export default class Login extends Component {
       }
       if (request.status === 200) {
         var req = JSON.parse(request.responseText)
+        ToastAndroid.show(JSON.stringify(req), ToastAndroid.LONG)
+
         // Iterrate trhought all the user to find one who matches the current users
-        clientsPhone = req.find((item2) => item2.phone == phone);
-        clientsPAssword = req.find((item2) => item2.password == password);
+        var clientsPhone = req.find((item2) => item2.phone == phone);
+        var clientsPAssword = req.find((item2) => item2.password == password);
+        ToastAndroid.show(JSON.stringify(clientsPhone), ToastAndroid.LONG)
+        ToastAndroid.show(JSON.stringify(clientsPAssword), ToastAndroid.LONG)
+
+        //TODO Get the structures
+
         if(!clientsPhone){
-          ToastAndroid.show("Identifiants incorrects", ToastAndroid.LONG)
+          ToastAndroid.show("Identifiants incorrects...", ToastAndroid.LONG)
         }
         else{
           //ToastAndroid.show(JSON.stringify(req), ToastAndroid.LONG)
@@ -70,17 +77,17 @@ export default class Login extends Component {
           .then(json => {
             ToastAndroid.show('Current user save locally', ToastAndroid.SHORT)
           }).catch(error => ToastAndroid.show('current_user error local memory', ToastAndroid.SHORT));
-          navigation.navigate("Browse");
+          //navigation.navigate("Browse");
         }
       } else {
         ToastAndroid.show("Identifiants incorrects", ToastAndroid.LONG)
-        navigation.navigate("Browse");
+        //navigation.navigate("Browse");
 
         //console.warn('error');
       }
     };
 
-    request.open('GET', 'https://apimeditracks.azurewebsites.net/api/users/'+phone);
+    request.open('GET', 'https://apimeditracks.azurewebsites.net/api/users/');
     request.send();
   }
 
