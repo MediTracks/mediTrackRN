@@ -82,26 +82,35 @@ class Browse extends Component {
                 key={category.name}
                 onPress={() => navigation.navigate("Explore", { category })}
               >
-                <Card center middle shadow style={styles.category}>
+                <Card column left middle shadow style={styles.category}>
+
+
+                <View style={styles.container}>
+                <View style={styles.pic}>
                   <Badge
+                    
                     margin={[0, 0, 15]}
                     size={50}
                     color="rgba(41,216,143,0.20)"
                   >
                     <Image source={category.image} />
                   </Badge>
+                </View>
+                <View style={styles.med}>
                   <Text medium height={20}>
                     {category.name}
                   </Text>
                   <Text gray caption>
                     {category.count} products
                   </Text>
+                </View>
+              </View>
                 </Card>
               </TouchableOpacity>
             ))}
           </Block>
         </ScrollView>
-        <ActionButton buttonColor="rgba(231,76,60,1)">
+        {/* <ActionButton buttonColor="rgba(231,76,60,1)">
           <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>
             <Icon name="ios-cloud" style={styles.actionButtonIcon} />
           </ActionButton.Item>
@@ -111,7 +120,7 @@ class Browse extends Component {
           <ActionButton.Item buttonColor='#1abc9c' title="All Tasks" onPress={() => {}}>
             <Icon name="ios-person-add" style={styles.actionButtonIcon} />
           </ActionButton.Item>
-        </ActionButton>
+        </ActionButton> */}
         
       </Block>
     );
@@ -127,7 +136,8 @@ export default Browse;
 
 const styles = StyleSheet.create({
   header: {
-    paddingHorizontal: theme.sizes.base * 2
+    paddingHorizontal: theme.sizes.base * 2,
+    paddingTop:30
   },
   avatar: {
     height: theme.sizes.base * 2.2,
@@ -154,14 +164,31 @@ const styles = StyleSheet.create({
     marginBottom: theme.sizes.base * 3.5
   },
   category: {
+    
     // this should be dynamic based on screen width
-    minWidth: (width - theme.sizes.padding * 2.4 - theme.sizes.base),
-    maxWidth: (width - theme.sizes.padding * 2.4 - theme.sizes.base),
-    maxHeight: (width - theme.sizes.padding * 2.4 - theme.sizes.base) / 2
+    //backgroundColor:"#134143",
+    width: (width - theme.sizes.padding * 2.4 - theme.sizes.base),
+    //maxWidth: (width - theme.sizes.padding * 2.4 - theme.sizes.base),
+    //maxHeight: (width - theme.sizes.padding * 2.4 - theme.sizes.base) / 2
+  },
+  pic:{
+   
+    //maxWidth: (width - theme.sizes.padding * 2.4 - theme.sizes.base)/4,
+  },
+  med: {
+    
+    paddingTop:10,
+    paddingLeft:10,
+    width: (width - theme.sizes.padding * 2.4 - theme.sizes.base) - ((width - theme.sizes.padding * 2.4 - theme.sizes.base)/4),
   },
   actionButtonIcon: {
     fontSize: 20,
     height: 22,
     color: 'white',
+  },
+  container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start' // if you want to fill rows left to right
   }
 });
