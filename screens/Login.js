@@ -31,7 +31,7 @@ export default class Login extends Component {
     Keyboard.dismiss();
     this.setState({ loading: true });
 
-    if (phone.trim().length <= 12) {
+    if (phone.trim().length <= 8) { //12
       errors.push("phone");
     }
     if (password.trim().length <= 5) {
@@ -61,23 +61,27 @@ export default class Login extends Component {
 
         // Iterrate trhought all the user to find one who matches the current users
         var clientsPhone = req.find((item2) => item2.phone == phone);
-        var clientsPAssword = req.find((item2) => item2.password == password);
         ToastAndroid.show(JSON.stringify(clientsPhone), ToastAndroid.LONG)
-        ToastAndroid.show(JSON.stringify(clientsPAssword), ToastAndroid.LONG)
-
+       
         //TODO Get the structures
-
-        if(!clientsPhone){
+        
+        if(!clientsPhone ){
+         
           ToastAndroid.show("Identifiants incorrects...", ToastAndroid.LONG)
         }
-        else{
+        else if( password == clientsPhone.password){
           //ToastAndroid.show(JSON.stringify(req), ToastAndroid.LONG)
           //Save current user in localstorage
           AsyncStorage.setItem('current_user', JSON.stringify(clientsPhone))
           .then(json => {
             ToastAndroid.show('Current user save locally', ToastAndroid.SHORT)
+            this._srtuctures();
           }).catch(error => ToastAndroid.show('current_user error local memory', ToastAndroid.SHORT));
           //navigation.navigate("Browse");
+        }
+        else{
+          ToastAndroid.show("Mots de passe incorrect...", ToastAndroid.LONG)
+
         }
       } else {
         ToastAndroid.show("Identifiants incorrects", ToastAndroid.LONG)
@@ -88,6 +92,51 @@ export default class Login extends Component {
     };
 
     request.open('GET', 'https://apimeditracks.azurewebsites.net/api/users/');
+    request.send();
+  }
+
+  //Structures de sante
+  _srtuctures = async () =>{
+    const { navigation } = this.props;
+    const { phone } = this.state;
+
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = e => {
+      if (request.readyState !== 4) {
+        return;
+      }
+      if (request.status === 200) {
+        var req = JSON.parse(request.responseText)
+        ToastAndroid.show(JSON.stringify(req), ToastAndroid.LONG)
+
+        // Iterrate trhought all the user to find one who matches the current users
+        var zoneByPhone = req.find((item2) => item2.telephone == phone);
+        ToastAndroid.show(JSON.stringify(zoneByPhone), ToastAndroid.LONG)
+        
+        //TODO Get the structures
+        
+        if(!zoneByPhone){
+          ToastAndroid.show("zoneByPhone incorrects...", ToastAndroid.LONG)
+        }
+        else{
+          //ToastAndroid.show(JSON.stringify(req), ToastAndroid.LONG)
+          //Save current user in localstorage
+          AsyncStorage.setItem('zoneByPhone', JSON.stringify(zoneByPhone))
+          .then(json => {
+            ToastAndroid.show('Current zoneByPhone save locally', ToastAndroid.SHORT)
+            navigation.navigate("Browse");
+          }).catch(error => ToastAndroid.show('zoneByPhone error local memory', ToastAndroid.SHORT));
+          //navigation.navigate("Browse");
+        }
+      } else {
+        ToastAndroid.show("zoneByPhone incorrects", ToastAndroid.LONG)
+        //navigation.navigate("Browse");
+
+        //console.warn('error');
+      }
+    };
+
+    request.open('GET', 'https://apimeditracks.azurewebsites.net/api/Structures/');
     request.send();
   }
 
