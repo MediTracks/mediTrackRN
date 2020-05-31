@@ -17,42 +17,53 @@ const screens = createStackNavigator({
         header: null,
     },
   },
+  // Login: {
+  //   screen: Login,
+  //   navigationOptions: {
+  //     headerStyle: {
+  //       height: theme.sizes.base * 4,
+  //       backgroundColor: "transparent",
+  //       borderBottomColor: "transparent",
+  //       elevation: 0 // for android
+  //     },
+  //     headerBackImage: null,
+  //     headerBackTitle: null,
+  //     headerLeftContainerStyle: {
+  //       alignItems: "center",
+  //       marginLeft: theme.sizes.base,
+  //       paddingRight: theme.sizes.base
+  //     },
+  //     headerRightContainerStyle: {
+  //       alignItems: "center",
+  //       paddingRight: theme.sizes.base
+  //     }
+  //   }
+      
+  // },
+
   Login: {
     screen: Login,
     navigationOptions: {
-      headerStyle: {
-        height: theme.sizes.base * 4,
-        backgroundColor: "transparent",
-        borderBottomColor: "transparent",
-        elevation: 0 // for android
-      },
-      headerBackImage: null,
-      headerBackTitle: null,
-      headerLeftContainerStyle: {
-        alignItems: "center",
-        marginLeft: theme.sizes.base,
-        paddingRight: theme.sizes.base
-      },
-      headerRightContainerStyle: {
-        alignItems: "center",
-        paddingRight: theme.sizes.base
-      }
-    }
+      header: null,
+    },
       
   },
+
   Browse: {
     screen: Browse,
-    
     navigationOptions: {
-        title: 'Home',
-        headerStyle: {
-          backgroundColor: '#f4511e',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
-      }
+      header: null,
+    },
+    // navigationOptions: {
+    //     title: 'Home',
+    //     headerStyle: {
+    //       backgroundColor: null,
+    //     },
+    //     headerTintColor: '#fff',
+    //     headerTitleStyle: {
+    //       fontWeight: 'bold',
+    //     },
+    //   }
     }
   }
 

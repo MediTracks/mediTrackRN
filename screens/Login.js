@@ -171,7 +171,8 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
   login: {
     flex: 1,
-    justifyContent: "center"
+    justifyContent: "center",
+    paddingTop:30
   },
   input: {
     borderRadius: 0,
