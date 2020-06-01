@@ -111,23 +111,24 @@ export default class Login extends Component {
         //ToastAndroid.show(JSON.stringify(req), ToastAndroid.LONG)
 
         // Iterrate trhought all the user to find one who matches the current users
-        var zoneByPhone = req.find((item2) => item2.telephone == phone);
-        //ToastAndroid.show(JSON.stringify(zoneByPhone), ToastAndroid.LONG)
+        var structureByPhone = req.find((item2) => item2.telephone == phone);
+        //ToastAndroid.show(JSON.stringify(structureByPhone), ToastAndroid.LONG)
         
         //TODO Get the structures
         
-        if(!zoneByPhone){
-          //ToastAndroid.show("zoneByPhone incorrects...", ToastAndroid.LONG)
+        if(!structureByPhone){
+          //ToastAndroid.show("structureByPhone incorrects...", ToastAndroid.LONG)
           this.setState({ loading: false });
         }
         else{
           //ToastAndroid.show(JSON.stringify(req), ToastAndroid.LONG)
-          //Save current user in localstorage
-          await AsyncStorage.setItem('zoneByPhone', JSON.stringify(zoneByPhone))
+          await AsyncStorage.setItem('structureByPhone', JSON.stringify(structureByPhone))
           .then(async json => {
-            //ToastAndroid.show('Current zoneByPhone save locally', ToastAndroid.SHORT)
-            await navigation.navigate("Browse");
-          }).catch(error => ToastAndroid.show('zoneByPhone error local memory', ToastAndroid.SHORT));
+            //ToastAndroid.show('Current structureByPhone save locally', ToastAndroid.SHORT)
+            //await navigation.navigate("Browse");
+            await this._zone(structureByPhone.zoneId)
+
+          }).catch(error => ToastAndroid.show('structureByPhone error local memory', ToastAndroid.SHORT));
         }
       } else {
         ToastAndroid.show("Vous etes assigne a aucune structure de sante", ToastAndroid.LONG)
@@ -138,6 +139,83 @@ export default class Login extends Component {
     };
 
     request.open('GET', 'https://apimeditracks.azurewebsites.net/api/Structures/');
+    request.send();
+  }
+
+  _zone = async (id) =>{
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = async e => {
+      if (request.readyState !== 4) {
+        return;
+      }
+      if (request.status === 200) {
+        var req = JSON.parse(request.responseText)
+        //ToastAndroid.show(JSON.stringify(req), ToastAndroid.LONG)  
+        await AsyncStorage.setItem('zone', JSON.stringify(req))
+          .then(async json => {
+            // Get ville by id req.villeId
+            await this._ville(req.villeId)
+          }).catch(error => ToastAndroid.show('zone error local memory', ToastAndroid.SHORT));
+
+      } else {
+        ToastAndroid.show("Une erreur s'est produite (zone)", ToastAndroid.LONG)
+        //console.warn('error');
+      }
+    };
+
+    request.open('GET', 'https://apimeditracks.azurewebsites.net/api/zones/'+id);
+    request.send();
+  }
+
+  _ville = async (id) =>{
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = async e => {
+      if (request.readyState !== 4) {
+        return;
+      }
+      if (request.status === 200) {
+        var req = JSON.parse(request.responseText)
+        //ToastAndroid.show(JSON.stringify(req), ToastAndroid.LONG)  
+        await AsyncStorage.setItem('ville', JSON.stringify(req))
+          .then(async json => {
+            // Get ville by id req.villeId
+            await this._province(req.provinceId)
+          }).catch(error => ToastAndroid.show('ville error local memory', ToastAndroid.SHORT));
+
+      } else {
+        ToastAndroid.show("Une erreur s'est produite (ville)", ToastAndroid.LONG)
+        //console.warn('error');
+      }
+    };
+
+    request.open('GET', 'https://apimeditracks.azurewebsites.net/api/villes/'+id);
+    request.send();
+  }
+  
+  _province = async (id) =>{
+    const { navigation } = this.props;
+
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = async e => {
+      if (request.readyState !== 4) {
+        return;
+      }
+      if (request.status === 200) {
+        var req = JSON.parse(request.responseText)
+        //ToastAndroid.show(JSON.stringify(req), ToastAndroid.LONG)  
+        await AsyncStorage.setItem('province', JSON.stringify(req))
+          .then(async json => {
+            // Get province by id req.provinceId
+            await navigation.navigate("Browse");
+          }).catch(error => ToastAndroid.show('province error local memory: '+error, ToastAndroid.SHORT));
+
+      } else {
+        ToastAndroid.show("Une erreur s'est produite (province)", ToastAndroid.LONG)
+        //console.warn('error');
+      }
+    };
+
+    request.open('GET', 'https://apimeditracks.azurewebsites.net/api/provinces/'+id);
     request.send();
   }
 
