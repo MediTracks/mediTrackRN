@@ -5,7 +5,9 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  View
+  View,
+  ToastAndroid,
+  AsyncStorage,
 } from "react-native";
 
 import { Card, Badge, Button, Block, Text } from "../components";
@@ -19,13 +21,39 @@ const { width } = Dimensions.get("window");
 class Browse extends Component {
   state = {
     active: "Medicaments",
-    categories: []
+    categories: [],
+    zone:{},
+    structure:"",
+    province:{},
+    ville:{},
+    profile_user:"",
+    commande:""
   };
 
   componentDidMount() {
     this.setState({ categories: this.props.categories });
+    //this._zone()
+    this._bootstrapAsync()
   }
 
+  _bootstrapAsync = async () => {
+    const zone = await AsyncStorage.getItem('zone');
+    const ville = await AsyncStorage.getItem('ville');
+    const province = await AsyncStorage.getItem('province');
+    const structure = await AsyncStorage.getItem('structureByPhone');
+
+    var currentZone = JSON.parse(zone);
+    var currentVille = JSON.parse(ville);
+    var currentProvince = JSON.parse(province);
+    var currentStructure = JSON.parse(structure);
+
+    this.setState({zone: currentZone})
+    this.setState({ville: currentVille})
+    this.setState({province: currentProvince})
+    this.setState({structure: currentStructure})
+  };
+
+  
   handleTab = tab => {
     const { categories } = this.props;
     const filtered = categories.filter(category =>
@@ -54,15 +82,21 @@ class Browse extends Component {
 
   render() {
     const { profile, navigation } = this.props;
-    const { categories } = this.state;
+    const { categories, zone, structure} = this.state;
     const tabs = ["Medicaments", "En attente", "Deja servi"];
 
     return (
       <Block>
         <Block flex={false} row center space="between" style={styles.header}>
+          <Block>
           <Text h2 bold>
-            Zone de sante de SAKE
+            Zone de Sante de {zone.description}
           </Text>
+          <Text gray caption>
+            {structure.description}
+          </Text>
+          </Block>
+          
           <Button onPress={() => navigation.navigate("Settings")}>
             <Image source={profile.avatar} style={styles.avatar} />
           </Button>
