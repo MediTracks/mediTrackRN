@@ -14,6 +14,8 @@ import { Card, Badge, Button, Block, Text } from "../components";
 import { theme, mocks } from "../constants";
 
 import ActionButton from 'react-native-circular-action-menu';
+import FAB from 'react-native-fab'
+
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const { width } = Dimensions.get("window");
@@ -144,6 +146,12 @@ class Browse extends Component {
             ))}
           </Block>
         </ScrollView>
+        <FAB buttonColor="red" 
+          iconTextColor="#FFFFFF" 
+          onClickAction={() => {console.log("FAB pressed")}} 
+          visible={true} 
+          iconTextComponent={<Icon name="ios-add"/>} />
+
         {/* <ActionButton buttonColor="rgba(231,76,60,1)">
           <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>
             <Icon name="ios-cloud" style={styles.actionButtonIcon} />
